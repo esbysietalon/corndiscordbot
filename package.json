@@ -4,9 +4,11 @@
   "description": "Simple economy bot. Implements simple stock exchange.",
   "main": "bot.js",
   "author": "joaq",
+  "scripts": {
+	"start": "node bot.js"
+  },
   "dependencies": {
-    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
     "discord.js": "^11.4.2",
-    "winston": "^3.2.1"
+    "request": "2.81.0"
   }
 }
