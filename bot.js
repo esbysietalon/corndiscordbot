@@ -342,7 +342,7 @@ class Industry{
     }
 }
 function workFor(industry){
-    if(isNaN(industry) === false){
+    if(!isNaN(industry)){
         if(parseInt(industry) - 1 < 0 || parseInt(industry) - 1 >= industries.length){
             return -1;
         }
@@ -484,7 +484,7 @@ function addItem(user, item, amount){
     var inExchange = false;
     var marketItem;
     //console.log(item);
-    if(isNaN(item) === true){
+    if(isNaN(item)){
 
         for(i = 0; i < market.length; i++){
             //console.log(market[i].name);
@@ -517,7 +517,7 @@ function addItem(user, item, amount){
         }
 
     }
-    if(inMarket === false || marketItem.num < amount){
+    if(!inMarket || marketItem.num < amount){
         return -2;
     }
     if(marketItem.price * amount > member.balance){
@@ -529,7 +529,7 @@ function addItem(user, item, amount){
             member.inventory[i].num += amount;
             member.balance = member.balance - marketItem.price * amount;
             marketItem.industry.profit += marketItem.price * amount;
-            if(inExchange === false){
+            if(!inExchange){
                 marketIndustry.demandIndex += 0.01 * amount;
                 marketItem.price = Math.round(marketItem.price * 10) / 10;
             }
@@ -540,7 +540,7 @@ function addItem(user, item, amount){
     member.inventory.push(new ItemSlot(marketItem.name, marketItem.price, amount));
     member.balance = member.balance - marketItem.price * amount;
     marketItem.num -= amount;
-    if(inExchange === false){
+    if(!inExchange){
         marketIndustry.demandIndex += 0.01 * amount;
         marketItem.price = Math.round(marketItem.price * 10) / 10;
     }
@@ -803,7 +803,7 @@ client.on('message', msg => {
 
     //var user = msg.author.avatarURL;
     //console.log(user);
-    if(msg.author.bot === true){
+    if(msg.author.bot){
         return;
     }
     var tempCmd = message.split(' ')[0];
@@ -832,7 +832,7 @@ client.on('message', msg => {
     var unregistered = true;
     var k;
     if(message === prefix + 'register' || message === prefix + 'hello'){				
-        if(register(user) === true){
+        if(register(user)){
             channelID.send('Registering ' + user + ', please see ' + prefix + 'help.');
         }else{
             channelID.send('Already registered ' + user + '!');
@@ -844,8 +844,8 @@ client.on('message', msg => {
             unregistered = false;
         }
     }
-    if(unregistered === true){
-        if(register(user) === true){
+    if(unregistered){
+        if(register(user)){
             channelID.send('Registering ' + user + ', please see ' + prefix + 'help.');
             messagerIndex = members.length - 1;
         }
@@ -859,13 +859,13 @@ client.on('message', msg => {
     var index = 0;
     var join = false;
     var argItem = '';
-    while(preprocessing === true){
+    while(preprocessing){
         argItem += args[index];
         tempArgs[t_index] = argItem;
         if(args[index].substring(0, 1) === '"' || args[index].substring(args[index].length - 1, args[index].length) === '"'){
             join = !join;
         }
-        if(join === false){
+        if(!join){
             t_index++;
             argItem = '';
         }else{
@@ -989,6 +989,8 @@ client.on('message', msg => {
                     if(runningTimers[j].messager.memberName === members[messagerIndex].memberName){
                         if(runningTimers[j].time > 0){
                             //console.log(namingPrompt.split(':').join('').split(' ').join('-'));
+                            console.log(namingPrompt.split(':').join(''));
+                            console.log(cmd);
                             if(namingPrompt.split(':').join('') === cmd){
                                 members[messagerIndex].skillExp[3] += 10 + members[messagerIndex].skillSet[3];
                                 if(members[messagerIndex].skillExp[3] >= 150){
@@ -1029,7 +1031,7 @@ client.on('message', msg => {
                                     namingPrompt += ': :' + namingItems[randIndex];
                                 }
                                 namingPrompt += ':';
-                                channelID.send('Name the items (joined by a \'-\'): ' + namingPrompt);
+                                channelID.send('Name the items: ' + namingPrompt);
                                 members[messagerIndex].inputState = 100;
 
                                 insertTimer(10, channelID, 'Shift over!', members[messagerIndex]);
@@ -1223,7 +1225,7 @@ client.on('message', msg => {
                         break;
                     }
                 }
-                if(isIllegal === true){
+                if(isIllegal){
                     break;
                 }
                 members[messagerIndex].corp.icon = cmd;
@@ -1336,7 +1338,7 @@ client.on('message', msg => {
                             break;
                         }
                     }
-                    if(isIllegal === true){
+                    if(isIllegal){
                         break;
                     }
                     var taken = false;
@@ -1347,7 +1349,7 @@ client.on('message', msg => {
                             break;
                         }
                     }
-                    if(taken === true){
+                    if(taken){
                         break;
                     }
                     members[messagerIndex].inputState = 500;
@@ -1365,7 +1367,7 @@ client.on('message', msg => {
                             break;
                         }
                     }
-                    if(isIllegal === true){
+                    if(isIllegal){
                         break;
                     }
                     var taken = false;
@@ -1376,7 +1378,7 @@ client.on('message', msg => {
                             break;
                         }
                     }
-                    if(taken === true){
+                    if(taken){
                         break;
                     }
                     members[messagerIndex].inputState = 600;
@@ -1400,7 +1402,7 @@ client.on('message', msg => {
                             break;
                         }
                     }
-                    if(isIllegal === true){
+                    if(isIllegal){
                         break;
                     }
                     var taken = false;
@@ -1411,7 +1413,7 @@ client.on('message', msg => {
                             break;
                         }
                     }
-                    if(taken === true){
+                    if(taken){
                         break;
                     }
                     members[messagerIndex].inputState = 500;
@@ -1529,11 +1531,11 @@ client.on('message', msg => {
                             }   
                         }
                     }
-                    if(adjacent === true){
+                    if(adjacent){
                         break;
                     }
                 }
-                if(adjacent === false){
+                if(!adjacent){
                     channelID.send('You can only claim territory that is adjacent to your own!');
                     break;
                 }else{
@@ -1547,7 +1549,7 @@ client.on('message', msg => {
                             }
                         }
                     }
-                    if(canPay === false){
+                    if(!canPay){
                         channelID.send('Insufficient industry to claim this area. You need 10 Gears.');
                         break;
                     }
@@ -1609,7 +1611,7 @@ client.on('message', msg => {
                             }
                         }
                     }
-                    if(canPay === false){
+                    if(!canPay){
                         channelID.send('Insufficient paperwork to settle a territory for your MegaCorp. You need at least 1000.');
                         break;
                     }
@@ -1655,7 +1657,7 @@ client.on('message', msg => {
                         }
                     }
                 }
-                if(inInventory === false){
+                if(!inInventory){
                     channelID.send('You don\'t have the required amount of paperwork to find anything out!');
                 }
                 break;
@@ -1691,7 +1693,7 @@ client.on('message', msg => {
                         break;
                     }
                 }
-                if(notFound === true){
+                if(notFound){
                     currBid.bidder.inventory.push(new ItemSlot(currAuction.item.name, currAuction.item.price, currAuction.amount));
                 }
                 members[messagerIndex].balance += currBid.bid;
@@ -1766,7 +1768,7 @@ client.on('message', msg => {
                     amount = 1;
                     var k;
                     var inMarket = false;
-                    if(isNaN(itemName) === true){
+                    if(isNaN(itemName)){
                         for(k = 0; k < market.length; k++){
                             if(itemName.toLowerCase() === market[k].name.toLowerCase()){
                                 item = market[k];
@@ -1774,7 +1776,7 @@ client.on('message', msg => {
                                 break;
                             }
                         }
-                        if(inMarket === false){
+                        if(!inMarket){
                             for(k = 0; k < exchange.length; k++){
                                 if(itemName.toLowerCase() === exchange[k].name.toLowerCase()){
                                     item = exchange[k];
@@ -1794,7 +1796,7 @@ client.on('message', msg => {
                             }
                         }
                     }
-                    if(inMarket === false){
+                    if(!inMarket){
                         channelID.send('That is not a market item!');
                         break;
                     }
@@ -1805,7 +1807,7 @@ client.on('message', msg => {
                     amount = parseInt(args[2]);
                     var k;
                     var inMarket = false;
-                    if(isNaN(itemName) === true){
+                    if(isNaN(itemName)){
                         for(k = 0; k < market.length; k++){
                             if(itemName.toLowerCase() === market[k].name.toLowerCase()){
                                 item = market[k];
@@ -1813,7 +1815,7 @@ client.on('message', msg => {
                                 break;
                             }
                         }
-                        if(inMarket === false){
+                        if(!inMarket){
                             for(k = 0; k < exchange.length; k++){
                                 if(itemName.toLowerCase() === exchange[k].name.toLowerCase()){
                                     item = exchange[k];
@@ -1833,7 +1835,7 @@ client.on('message', msg => {
                             }
                         }
                     }
-                    if(inMarket === false){
+                    if(!inMarket){
                         channelID.send('That is not a market item!');
                         break;
                     }
@@ -1845,7 +1847,7 @@ client.on('message', msg => {
                     startBid = parseInt(args[3]);
                     var k;
                     var inMarket = false;
-                    if(isNaN(itemName) === true){
+                    if(isNaN(itemName)){
                         for(k = 0; k < market.length; k++){
                             if(itemName.toLowerCase() === market[k].name.toLowerCase()){
                                 item = market[k];
@@ -1853,7 +1855,7 @@ client.on('message', msg => {
                                 break;
                             }
                         }
-                        if(inMarket === false){
+                        if(!inMarket){
                             for(k = 0; k < exchange.length; k++){
                                 if(itemName.toLowerCase() === exchange[k].name.toLowerCase()){
                                     item = exchange[k];
@@ -1873,7 +1875,7 @@ client.on('message', msg => {
                             }
                         }
                     }
-                    if(inMarket === false){
+                    if(!inMarket){
                         channelID.send('That is not a market item!');
                         break;
                     }
@@ -1898,7 +1900,7 @@ client.on('message', msg => {
                         break;
                     }
                 }
-                if(dontHave === true){
+                if(dontHave){
                     channelID.send('You can\'t put up what you don\'t have.');
                     break;
                 }
@@ -1944,7 +1946,7 @@ client.on('message', msg => {
                 var itemName = args[1];
                 var amount = 1;
                 if(args.length > 2){
-                    if(isNaN(args[2]) === true){
+                    if(isNaN(args[2])){
                         channelID.send('usage: ' + prefix + 'buy <item name> <amount>.');
                         break;
                     }
@@ -1954,7 +1956,7 @@ client.on('message', msg => {
 
                 switch(attempt){
                     case 0:
-                        if(isNaN(itemName) === false && (parseInt(itemName) - 1 >= 0 && parseInt(itemName) - 1 < exchange.length + market.length)){
+                        if(!isNaN(itemName) && (parseInt(itemName) - 1 >= 0 && parseInt(itemName) - 1 < exchange.length + market.length)){
                             if(itemName - 1 >= market.length){
                                 itemName -= market.length;
                                 itemName = exchange[itemName - 1].name;
@@ -1981,7 +1983,7 @@ client.on('message', msg => {
                         channelID.send('No member with the name ' + user + ' has been found!');
                         break;
                     case -2:
-                        if(isNaN(itemName) === false && (parseInt(itemName) - 1 >= 0 && parseInt(itemName) - 1 < exchange.length + market.length)){
+                        if(!isNaN(itemName) && (parseInt(itemName) - 1 >= 0 && parseInt(itemName) - 1 < exchange.length + market.length)){
                             if(itemName - 1 >= market.length){
                                 itemName -= market.length;
                                 itemName = exchange[itemName - 1].name;
@@ -2004,7 +2006,7 @@ client.on('message', msg => {
                         channelID.send('There aren\'t/isn\'t even ' + amount + ' ' + itemName + '(s) in the market!');
                         break;
                     case -3:
-                        if(isNaN(itemName) === false && (parseInt(itemName) - 1 >= 0 && parseInt(itemName) - 1 < exchange.length + market.length)){
+                        if(!isNaN(itemName) && (parseInt(itemName) - 1 >= 0 && parseInt(itemName) - 1 < exchange.length + market.length)){
                             if(itemName - 1 >= market.length){
                                 itemName -= market.length;
                                 itemName = exchange[itemName - 1].name;
@@ -2116,7 +2118,7 @@ client.on('message', msg => {
                                     namingPrompt += ': :' + namingItems[randIndex];
                                 }
                                 namingPrompt += ':';
-                                channelID.send('Name the item: :' + namingPrompt);
+                                channelID.send('Name the items: :' + namingPrompt);
                                 members[messagerIndex].inputState = 100;
 
                                 insertTimer(10, channelID, 'Shift over!', members[messagerIndex]);
